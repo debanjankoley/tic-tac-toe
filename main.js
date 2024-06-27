@@ -12,5 +12,10 @@ const gameBoard = (function () {
 
     const getBoard = () => board;
 
-    return {getBoard};
+    const placeMark = function (row, column, playerMark) {
+        if (board[row][column] !== '') return;
+        board[row][column] = playerMark;
+    };
+
+    return {getBoard, placeMark};
 })();
