@@ -23,3 +23,17 @@ const gameBoard = (function () {
 function createPlayer (name, mark) {
     return {name, mark};
 };
+
+const gameController = (function (
+    playerOne = createPlayer("Player One", "X"),
+    playerTwo = createPlayer("Player Two", "O")
+) {
+    let activePlayer = playerOne;
+
+    const switchPlayerTurn = () => {
+        activePlayer = activePlayer === playerOne ? playerTwo : playerOne;
+    };
+
+    const getActivePlayer = () => activePlayer;
+
+})();
