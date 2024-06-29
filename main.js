@@ -44,6 +44,10 @@ const gameController = (function (
         gameBoard.placeMark(row, column, getActivePlayer().mark);
 
         showResult();
+        if (roundResult() == "win" || roundResult() == "draw") {
+            console.log(gameBoard.getBoard());
+            return;
+        };
         switchPlayerTurn();
         printNewRound();
         };
