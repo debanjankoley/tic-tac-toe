@@ -13,7 +13,6 @@ const gameBoard = (function () {
     const getBoard = () => board;
 
     const placeMark = function (row, column, playerMark) {
-        if (board[row][column] !== '') return;
         board[row][column] = playerMark;
     };
 
@@ -36,4 +35,23 @@ const gameController = (function (
 
     const getActivePlayer = () => activePlayer;
 
+    const printNewRound = () => {
+        console.log(gameBoard.getBoard());
+        console.log(`${getActivePlayer().name}'s turn -`);
+    };
+
+    const playRound = (row, column) => {
+        if (gameBoard.getBoard()[row][column] === '') {
+        console.log(`Marking ${getActivePlayer().name}'s mark in row:${row} and column:${column}`)
+        gameBoard.placeMark(row, column, getActivePlayer().mark);
+    
+        switchPlayerTurn();
+        printNewRound();
+        };
+    };
+
+    printNewRound();
+
+
+    return {playRound};
 })();
