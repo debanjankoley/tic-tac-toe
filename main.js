@@ -39,17 +39,18 @@ const gameController = (function (
     };
 
     const playRound = (row, column) => {
-        if (gameBoard.getBoard()[row][column] === '') {
-        console.log(`Marking ${getActivePlayer().name}'s mark in row:${row} and column:${column}`);
-        gameBoard.placeMark(row, column, getActivePlayer().mark);
-
-        showResult();
         if (roundResult() == "win" || roundResult() == "draw") {
             console.log(gameBoard.getBoard());
             return;
         };
-        switchPlayerTurn();
-        printNewRound();
+
+        if (gameBoard.getBoard()[row][column] === '') {
+            console.log(`Marking ${getActivePlayer().name}'s mark in row:${row} and column:${column}`);
+            gameBoard.placeMark(row, column, getActivePlayer().mark);
+
+            showResult();
+            switchPlayerTurn();
+            printNewRound();
         };
     };
 
@@ -85,5 +86,44 @@ const gameController = (function (
 
     printNewRound();
 
-    return {playRound};
+    return {playRound, getActivePlayer};
 })();
+
+function screenController () {
+    const boardDiv = document.querySelector('.board');
+    const board = gameBoard.getBoard();
+    
+    const updateScreen = (e) => {
+        const row = e.target.dataset.row;
+        const column = e.target.dataset.column;
+        
+        gameController.playRound(row, column);
+        e.target.textContent = board[row][column];
+    };
+
+    const playerTurnMessage = () => {
+        const playerTurnDiv = document.querySelector('.turn');
+        const activePlayer = gameController.getActivePlayer();
+        
+        playerTurnDiv.textContent = `${activePlayer.name}'s turn...`
+    };
+
+    board.forEach((row, rowIndex) => {
+        row.forEach((column, columnIndex) => {
+            const cellBtn = document.createElement('button');
+
+            cellBtn.classList.add('cell');
+            cellBtn.dataset.row = rowIndex;
+            cellBtn.dataset.column = columnIndex;
+            cellBtn.addEventListener('click', (e) => {
+                updateScreen(e);
+                playerTurnMessage();
+            });
+            boardDiv.appendChild(cellBtn);
+        });
+    });
+
+    playerTurnMessage();
+};
+
+screenController()
