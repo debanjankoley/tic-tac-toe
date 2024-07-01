@@ -49,6 +49,7 @@ const gameController = (function (
             gameBoard.placeMark(row, column, getActivePlayer().mark);
 
             showResult();
+            if (roundResult() === "win") return;
             switchPlayerTurn();
             printNewRound();
         };
@@ -86,7 +87,7 @@ const gameController = (function (
 
     printNewRound();
 
-    return {playRound, getActivePlayer};
+    return {playRound, getActivePlayer, roundResult};
 })();
 
 function screenController () {
@@ -104,8 +105,15 @@ function screenController () {
     const playerTurnMessage = () => {
         const playerTurnDiv = document.querySelector('.turn');
         const activePlayer = gameController.getActivePlayer();
-        
-        playerTurnDiv.textContent = `${activePlayer.name}'s turn...`
+        const result = gameController.roundResult();
+
+        if (result === "win") {
+            playerTurnDiv.textContent = `${activePlayer.name} Won !!`;
+        } else if (result === "draw") {
+            playerTurnDiv.textContent = "It's a Draw !!";
+        } else {
+            playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
+        };
     };
 
     board.forEach((row, rowIndex) => {
