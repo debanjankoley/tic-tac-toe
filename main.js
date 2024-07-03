@@ -25,7 +25,7 @@ function createPlayer (name, mark) {
     return {name, mark};
 };
 
-const gameController = (function (
+const createGameController = (function (
     playerOne = createPlayer("Player One", "X"),
     playerTwo = createPlayer("Player Two", "O")
 ) {
@@ -94,12 +94,16 @@ const gameController = (function (
     printNewRound();
 
     return {playRound, getActivePlayer, roundResult, resetActivePLayer};
-})();
+});
 
 function screenController () {
+    let gameController = createGameController();
     const board = gameBoard.getBoard();
     const boardDiv = document.querySelector('.board');
     const restartBtn = document.querySelector('.restartBtn');
+    const newGameBtn = document.querySelector('.newGame');
+    const dialog = document.querySelector('dialog');
+    const confirmBtn = document.getElementById('confirmBtn');
     
     const updateScreen = (e) => {
         const row = e.target.dataset.row;
@@ -140,17 +144,35 @@ function screenController () {
         });
     };
 
-    restartBtn.addEventListener('click', () => {
+    const startGame = () =>{
         boardDiv.textContent = "";
         gameBoard.newBoard();
         gameController.resetActivePLayer();
         renderSquares();
         playerTurnMessage();
-    })
+    };
+
+    restartBtn.addEventListener('click', startGame);
+
+    newGameBtn.addEventListener('click', () => {
+        dialog.showModal();
+    });
+
+    confirmBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        dialog.close();
+    });
+
+    dialog.addEventListener('close', () => {
+        const playerOneBox = document.getElementById('player-one');
+        const playerTwoBox = document.getElementById('player-two');
+
+        gameController = createGameController(createPlayer(playerOneBox.value, 'X'), createPlayer(playerTwoBox.value, 'O'));
+        startGame();
+    });
 
     renderSquares();
     playerTurnMessage();
-
 };
 
-screenController()
+screenController();
