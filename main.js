@@ -1,12 +1,16 @@
 const gameBoard = (function () {
     const board = [];
     
-    for (let i = 0; i < 3; i++) {
-        board[i] = [];
-        for (let j = 0; j < 3; j++) {
-            board[i][j] = '';
-        };
+    const newBoard = () => {
+        for (let i = 0; i < 3; i++) {
+            board[i] = [];
+            for (let j = 0; j < 3; j++) {
+                board[i][j] = '';
+            };
+        };    
     };
+
+    newBoard();
 
     const getBoard = () => board;
 
@@ -14,7 +18,7 @@ const gameBoard = (function () {
         board[row][column] = playerMark;
     };
 
-    return {getBoard, placeMark};
+    return {getBoard, placeMark, newBoard};
 })();
 
 function createPlayer (name, mark) {
@@ -26,6 +30,8 @@ const gameController = (function (
     playerTwo = createPlayer("Player Two", "O")
 ) {
     let activePlayer = playerOne;
+
+    const resetActivePLayer = () => activePlayer = playerOne;
 
     const switchPlayerTurn = () => {
         activePlayer = activePlayer === playerOne ? playerTwo : playerOne;
@@ -87,12 +93,13 @@ const gameController = (function (
 
     printNewRound();
 
-    return {playRound, getActivePlayer, roundResult};
+    return {playRound, getActivePlayer, roundResult, resetActivePLayer};
 })();
 
 function screenController () {
-    const boardDiv = document.querySelector('.board');
     const board = gameBoard.getBoard();
+    const boardDiv = document.querySelector('.board');
+    const restartBtn = document.querySelector('.restartBtn');
     
     const updateScreen = (e) => {
         const row = e.target.dataset.row;
@@ -116,22 +123,34 @@ function screenController () {
         };
     };
 
-    board.forEach((row, rowIndex) => {
-        row.forEach((column, columnIndex) => {
-            const cellBtn = document.createElement('button');
-
-            cellBtn.classList.add('cell');
-            cellBtn.dataset.row = rowIndex;
-            cellBtn.dataset.column = columnIndex;
-            cellBtn.addEventListener('click', (e) => {
-                updateScreen(e);
-                playerTurnMessage();
+    const renderSquares = () => {
+        board.forEach((row, rowIndex) => {
+            row.forEach((column, columnIndex) => {
+                const cellBtn = document.createElement('button');
+    
+                cellBtn.classList.add('cell');
+                cellBtn.dataset.row = rowIndex;
+                cellBtn.dataset.column = columnIndex;
+                cellBtn.addEventListener('click', (e) => {
+                    updateScreen(e);
+                    playerTurnMessage();
+                });
+                boardDiv.appendChild(cellBtn);
             });
-            boardDiv.appendChild(cellBtn);
         });
-    });
+    };
 
+    restartBtn.addEventListener('click', () => {
+        boardDiv.textContent = "";
+        gameBoard.newBoard();
+        gameController.resetActivePLayer();
+        renderSquares();
+        playerTurnMessage();
+    })
+
+    renderSquares();
     playerTurnMessage();
+
 };
 
 screenController()
