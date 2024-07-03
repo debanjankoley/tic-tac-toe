@@ -25,7 +25,7 @@ function createPlayer (name, mark) {
     return {name, mark};
 };
 
-const createGameController = (function (
+const gameController = (function (
     playerOne = createPlayer("Player One", "X"),
     playerTwo = createPlayer("Player Two", "O")
 ) {
@@ -91,13 +91,17 @@ const createGameController = (function (
         };
     };
 
+    const changePlayerName = (newP1name, newP2name) => {
+        playerOne.name = newP1name;
+        playerTwo.name = newP2name;
+    };
+
     printNewRound();
 
-    return {playRound, getActivePlayer, roundResult, resetActivePLayer};
-});
+    return {playRound, getActivePlayer, roundResult, resetActivePLayer, changePlayerName};
+})();
 
 function screenController () {
-    let gameController = createGameController();
     const board = gameBoard.getBoard();
     const boardDiv = document.querySelector('.board');
     const restartBtn = document.querySelector('.restartBtn');
@@ -167,7 +171,7 @@ function screenController () {
         const playerOneBox = document.getElementById('player-one');
         const playerTwoBox = document.getElementById('player-two');
 
-        gameController = createGameController(createPlayer(playerOneBox.value, 'X'), createPlayer(playerTwoBox.value, 'O'));
+        gameController.changePlayerName(playerOneBox.value, playerTwoBox.value);
         startGame();
     });
 
