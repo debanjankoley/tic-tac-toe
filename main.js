@@ -107,7 +107,6 @@ function screenController () {
     const restartBtn = document.querySelector('.restartBtn');
     const newGameBtn = document.querySelector('.newGame');
     const dialog = document.querySelector('dialog');
-    const confirmBtn = document.getElementById('confirmBtn');
     
     const updateScreen = (e) => {
         const row = e.target.dataset.row;
@@ -162,16 +161,13 @@ function screenController () {
         dialog.showModal();
     });
 
-    confirmBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        dialog.close();
-    });
-
     dialog.addEventListener('close', () => {
         const playerOneBox = document.getElementById('player-one');
         const playerTwoBox = document.getElementById('player-two');
 
-        gameController.changePlayerName(playerOneBox.value, playerTwoBox.value);
+        if (dialog.returnValue === 'start') {
+            gameController.changePlayerName(playerOneBox.value, playerTwoBox.value);
+        };
         startGame();
     });
 

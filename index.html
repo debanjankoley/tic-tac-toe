@@ -12,7 +12,6 @@
     <div class="container">
         <div class="turn"></div>
         <div class="board"></div>
-        <div class="newGame">New Game</div>
         <dialog>
             <form method="dialog">
                 <p>
@@ -23,10 +22,13 @@
                     <label for="player-two">Player two name:</label>
                     <input type="text" id="player-two" required>
                 </p>
-                <button id="confirmBtn" value="start">Start</button>
+                <p><button id="confirmBtn" value="start">Start</button></p>
             </form>
         </dialog>
-        <div class="restartBtn"><button>Restart</button></div>
+        <div id="buttons-div">
+            <button class="newGame">New Game</button>
+            <button class="restartBtn">Restart</button>
+        </div>
     </div>
     <div class="footer"></div>
 </body>

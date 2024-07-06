@@ -1,15 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+* {
+    box-sizing: border-box;
+    font-family: 'Varela Round', sans-serif;
+}
+
+:root {
+    font-size: 10px;
+    --base: #1e1e2e;
+    --base-2: #585b70;
+    --base-3: #9399b2;
+    --base-4: #eff1f5;
+    --text: #cdd6f4;
+    --text-2: #4c4f69;
+    --red: #f38ba8;
+    --rosewater: #f5e0dc;
+    --yellow: #f9e2af;
+    --green: #a6e3a1;
+}
+
 body {
     margin: 0;
     padding: 0;
 }
 
 .header {
-    height: 150px;
+    height: 200px;
+    text-align: center;
+    align-content: center;
+    background-color: var(--base);
+    color: var(--text);
+    font-size: 10rem;
+    font-weight: bolder;
+    border-bottom: 2px solid var(--red);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--base-2);
+}
+
+.turn {
+    color: var(--yellow);
+    font-size: 4rem;
 }
 
 .container > .turn,
-.container > .restartBtn {
+#buttons-div {
     height: 100px;
+    align-content: center;
 }
 
 .container > .board {
@@ -18,4 +60,66 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
+    border: 2px solid var(--base);
+    padding: 0;
+    border-radius: 3px;
+}
+
+.board > button {
+    border: 1px solid var(--base);
+    font-size: 5rem;
+    font-weight: bold;
+    background-color: var(--base-3);
+    color: var(--rosewater);
+}
+
+#buttons-div {
+    width: 320px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#buttons-div > button {
+    height: 50px;
+    width: 150px;
+    font-size: 2.5rem;
+    background-color: var(--text);
+    color: var(--base);
+    border-radius: 5px;
+    border: 2px solid var(--base);
+}
+
+dialog {
+    background-color: var(--base-4);
+    color: var(--text-2);
+    width: 350px;
+    padding: 20px;
+}
+
+label {
+    font-size: 1.5rem;
+    display: block;
+    padding: 5px;
+}
+
+input {
+    width: 100%;
+    height: 35px;
+    padding: 3px 9px;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    border: 2px solid var(--text-2);
+}
+
+form > p:last-child > button {
+    height: 40px;
+    width: 100px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    background-color: var(--text-2);
+    border: 1px solid var(--text-2);
+    color: var(--base-4);
+    cursor: pointer;
 }
