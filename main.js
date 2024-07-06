@@ -39,25 +39,16 @@ const gameController = (function (
 
     const getActivePlayer = () => activePlayer;
 
-    const printNewRound = () => {
-        console.log(gameBoard.getBoard());
-        console.log(`${getActivePlayer().name}'s turn -`);
-    };
-
     const playRound = (row, column) => {
         if (roundResult() == "win" || roundResult() == "draw") {
-            console.log(gameBoard.getBoard());
             return;
         };
 
         if (gameBoard.getBoard()[row][column] === '') {
-            console.log(`Marking ${getActivePlayer().name}'s mark in row:${row} and column:${column}`);
             gameBoard.placeMark(row, column, getActivePlayer().mark);
 
-            showResult();
             if (roundResult() === "win") return;
             switchPlayerTurn();
-            printNewRound();
         };
     };
 
@@ -83,20 +74,10 @@ const gameController = (function (
         return result;
     };
 
-    const showResult = (result = roundResult()) => {
-        if (result === "win") {
-            console.log(`${getActivePlayer().name} won!!`);
-        } else if (result === "draw") {
-            console.log("It's a draw!!");
-        };
-    };
-
     const changePlayerName = (newP1name, newP2name) => {
         playerOne.name = newP1name;
         playerTwo.name = newP2name;
     };
-
-    printNewRound();
 
     return {playRound, getActivePlayer, roundResult, resetActivePLayer, changePlayerName};
 })();
