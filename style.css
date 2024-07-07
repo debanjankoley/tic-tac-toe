@@ -6,7 +6,7 @@
 }
 
 :root {
-    font-size: 10px;
+    font-size: 62.5%;
     --base: #1e1e2e;
     --base-2: #585b70;
     --base-3: #9399b2;
@@ -25,7 +25,7 @@ body {
 }
 
 .header {
-    height: 200px;
+    min-height: 200px;
     text-align: center;
     align-content: center;
     background-color: var(--base);
@@ -50,27 +50,29 @@ body {
 
 .container > .turn,
 #buttons-div {
-    height: 100px;
+    min-height: 100px;
     align-content: center;
 }
 
 .container > .board {
-    height: 450px;
-    width: 450px;
+    height: 80vw;
+    width: 80vw;
+    max-height: 450px;
+    max-width: 450px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     border: 2px solid var(--base);
-    padding: 0;
     border-radius: 3px;
 }
 
 .board > button {
     border: 1px solid var(--base);
-    font-size: 5rem;
+    font-size: 7rem;
     font-weight: bold;
     background-color: var(--base-3);
     color: var(--rosewater);
+    padding: 0;
 }
 
 #buttons-div {
@@ -122,4 +124,38 @@ form > p:last-child > button {
     border: 1px solid var(--text-2);
     color: var(--base-4);
     cursor: pointer;
+}
+
+@media (max-width:768px) {
+    .header {
+        font-size: 6rem;
+        min-height: 140px;
+    }
+
+    .turn {
+        font-size: 2.5rem;
+    }
+
+    .container > .board {
+        max-width: 350px;
+        max-height: 350px;
+    }
+
+    .container > .turn {
+        min-height: 70px;
+    }
+
+    .board > button {
+        font-size: 5rem;
+    }
+
+    #buttons-div {
+        width: 230px;
+    }
+
+    #buttons-div > button {
+        height: 45px;
+        width: 110px;
+        font-size: 1.5rem;
+    }
 }
