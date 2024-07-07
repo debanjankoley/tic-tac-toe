@@ -3,7 +3,6 @@
 * {
     box-sizing: border-box;
     font-family: 'Varela Round', sans-serif;
-    background-color: var(--base-2);
 }
 
 :root {
@@ -23,6 +22,7 @@
 body {
     margin: 0;
     padding: 0;
+    background-color: var(--base-2);
 }
 
 .header {
